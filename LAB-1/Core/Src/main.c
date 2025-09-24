@@ -31,7 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define VAR
+#define ARR
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -100,9 +100,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-#ifdef VAR
+#ifdef ARR
 	  uint8_t arr[32] = {1,0,1,0,1,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0};
-	  for(uint8_t i = 0; i<sizeof(arr); i++)
+	  for(uint8_t i = sizeof(arr)-1; i >= 0; i--)
 	  {
 		  if(arr[i] > 0)
 		  {
@@ -114,16 +114,15 @@ int main(void)
 	  }
 #else
 	  uint32_t var = 0b10101001110111011100101010000000;
-	  for(uint8_t i = 0; i<(sizeof(var)*8); i++)
+	  for(int8_t i = (sizeof(var)*8)-1; i >= 0; i--)
 	  {
-		  if(var & 1)
+		  if(var & (1ul << i))
 		  {
 			  LL_GPIO_SetOutputPin(LD2_GPIO_Port, LD2_Pin);
 		  } else {
 			  LL_GPIO_ResetOutputPin(LD2_GPIO_Port, LD2_Pin);
 		  }
 		  LL_mDelay(200);
-		  var >>= 1;
 	  }
 #endif
   }
