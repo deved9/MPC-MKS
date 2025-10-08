@@ -60,7 +60,7 @@ static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN 0 */
 volatile uint32_t Tick;
 
-void blink()
+void blink(void)
 {
 	static uint32_t delay = 0;
 	if (Tick > delay + LED_TIME_BLINK) {
@@ -69,7 +69,7 @@ void blink()
 	}
 }
 
-void button()
+void button(void)
 {
 	static uint32_t sampleDelay = 0;
 	static uint16_t debounce_s1 = 0xFFFF;
@@ -101,9 +101,9 @@ void button()
 
 		old_s1 = new_s1;
 		old_s2 = new_s2;
-		*/
+		 */
 
-		debounce_s1 = (debounce_s1 << 1) | LL_GPIO_IsInputPinSet(S1_GPIO_Port, S1_Pin);
+		debounce_s1 = (debounce_s1 << 1) | (LL_GPIO_IsInputPinSet(S1_GPIO_Port, S1_Pin) ? 1 : 0);
 		debounce_s2 = (debounce_s2 << 1) | LL_GPIO_IsInputPinSet(S2_GPIO_Port, S2_Pin);
 
 		if (debounce_s1 == 0x7FFF)
